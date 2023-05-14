@@ -4,7 +4,6 @@
 docker run --name postgres-seidor -e POSTGRES_PASSWORD=seidor -p 5432:5432 -d postgres
 
 - Logo em seguida rode o yarn para instalacao das dependencias e rode as migrations do banco de dados
-yarn
 yarn typeorm migration:run
 
 
