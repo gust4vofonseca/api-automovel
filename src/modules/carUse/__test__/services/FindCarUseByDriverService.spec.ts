@@ -8,6 +8,7 @@ import { FindCarUseByDriverService } from "@modules/carUse/services/FindCarUseBy
 import { IDriverRepository } from "@modules/driver/infra/repositories/IDriverRepository";
 import { FakeDriverRepository } from "@modules/driver/infra/repositories/fake/FakeDriverRepository";
 import { Driver } from "@modules/driver/infra/typeorm/entities/Driver";
+import AppError from "@shared/errors/AppError";
 import {v4 as uuidV4} from 'uuid'
 
 let fakeDriverRepository: IDriverRepository;
@@ -48,10 +49,22 @@ describe("Find car use by driver service test", () => {
     fakeDriverRepository = new FakeDriverRepository([driver ]);
     fakeCarRepository = new FakeCarRepository([car ]);
     fakeCarUseRepository = new FakeCarUseRepository([carUse]);
-    findCarUseByDriverService = new FindCarUseByDriverService(fakeCarUseRepository,);
+    findCarUseByDriverService = new FindCarUseByDriverService(fakeCarUseRepository, fakeDriverRepository);
   })
 
   it ("it should be possible to search for the driver id", async () => {
-      await findCarUseByDriverService.execute(driver.id);
+      const response = await findCarUseByDriverService.execute(driver.id);
+
+      expect(response).toContainEqual(carUse);
   })
+
+  it ("it should be possible to search for the driver id", async () => {
+    await expect(
+      findCarUseByDriverService.execute('1234')
+    ).rejects.toEqual(new AppError(
+      'Driver does not exist!',
+      400,
+      'find_by_dryver_car_use',
+    ));
+})
 });

@@ -1,4 +1,5 @@
 import { UpdateDriverService } from "@modules/driver/services/UpdateDriverService";
+import AppError from "@shared/errors/AppError";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
@@ -9,10 +10,18 @@ export class UpdateDriverController {
           name,
         } = request.body;
 
+        if (!name || !id) {
+          throw new AppError(
+            'It is missing parameters!',
+            400,
+            'update_driver',
+          );
+        }
+
         const updateDriverService = container.resolve(UpdateDriverService);
 
-        await updateDriverService.execute(id, name);
+        const driver = await updateDriverService.execute(id, name);
 
-        return response.status(200).send();
+        return response.status(200).json(driver);
     }
 }

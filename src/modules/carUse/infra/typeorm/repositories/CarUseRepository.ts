@@ -19,13 +19,11 @@ export class CarUseRepository implements ICarUseRepository {
       start_date
     });
 
-    await this.ormRepository.save(carUse);
-
-    return carUse;
+    return await this.ormRepository.save(carUse);
   }
 
-  async update(car_use: CarUse): Promise<void> {
-    await this.ormRepository.save(car_use);
+  async update(car_use: CarUse): Promise<CarUse> {
+    return await this.ormRepository.save(car_use);
   }
 
   async delete(id: string): Promise<void> {

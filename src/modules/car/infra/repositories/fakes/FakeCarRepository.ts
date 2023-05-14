@@ -1,7 +1,7 @@
 import { ICarRepository } from "../ICarRepository";
-import { ICarDTO } from "@modules/car/dtos/ICarDTO";
 import { v4 as uuidV4 } from 'uuid';
 import { Car } from "../../typeorm/entities/Car";
+import { ICreateCarDTO } from "@modules/car/dtos/ICreateCarDTO";
 
 export class FakeCarRepository implements ICarRepository {
     private ormRepository: Car[] = [];
@@ -10,7 +10,7 @@ export class FakeCarRepository implements ICarRepository {
       this.ormRepository = cars || [];
     }
 
-    async create({ brand, color, plate }: ICarDTO): Promise<Car> {
+    async create({ brand, color, plate }: ICreateCarDTO): Promise<Car> {
         const car = new Car();
 
         Object.assign(car, {
@@ -31,7 +31,7 @@ export class FakeCarRepository implements ICarRepository {
         this.ormRepository = cars;
     }
 
-    async update({brand, color, plate, id}: Car): Promise<void> {
+    async update({brand, color, plate, id}: Car): Promise<Car> {
         this.ormRepository.map(car => {
           if (car.id === id) {
             car.brand = brand;
@@ -39,6 +39,10 @@ export class FakeCarRepository implements ICarRepository {
             car.plate = plate;
           }
         });
+
+        const car = this.ormRepository.find(car => car.id === id);
+
+        return car;
     }
 
     async findById(id: string): Promise<Car | undefined> {

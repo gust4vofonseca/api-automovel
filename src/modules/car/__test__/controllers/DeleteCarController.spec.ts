@@ -19,15 +19,24 @@ describe('Delete car controller test', () => {
       brand: "Fiat",
       color: "Cinza",
       plate: "HMT-3421"
-  }
+    }
+
+    const id = createCar.id;
 
     const response = await request(app)
     .delete("/car/delete")
-    .send(createCar.id);
+    .send({id});
 
     expect(response.status).toBe(200);
-    expect(
-      deleteCarServiceMock.prototype.execute,
-    ).toHaveBeenCalledWith(undefined);
+  });
+
+  it('should return an error due to missing parameters', async () => {
+    deleteCarServiceMock.prototype.execute.mockResolvedValueOnce();
+
+    const response = await request(app)
+    .delete("/car/delete")
+    .send();
+
+    expect(response.status).toBe(400);
   });
 });

@@ -69,14 +69,17 @@ describe("Create car use service test", () => {
   })
 
   it ("It should be possible to create a car use", async () => {
-    const carUse = {
+    const carUseData = {
       car_id: car.id,
       driver_id: driver.id,
       reason_for_use: "Teste",
       start_date: new Date()
     };
 
-    await createCarUSeService.execute(carUse);
+    const response = await createCarUSeService.execute(carUseData);
+
+    expect(response.car_id).toEqual(carUseData.car_id);
+    expect(response.driver_id).toEqual(carUseData.driver_id);
   })
 
   it ("should show a car error in use", async () => {

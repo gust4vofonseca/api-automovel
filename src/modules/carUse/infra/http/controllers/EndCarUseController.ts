@@ -1,4 +1,5 @@
 import { EndCarUseService } from "@modules/carUse/services/EndCarUseService";
+import AppError from "@shared/errors/AppError";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
@@ -9,13 +10,22 @@ export class EndCarUseController {
           end_date
         } = request.body;
 
+        if (!id || !end_date) {
+          throw new AppError(
+            'It is missing parameters!',
+            400,
+            'end_car_use',
+          );
+        }
+    
+
         const endCarUseService = container.resolve(EndCarUseService);
 
-        await endCarUseService.execute(
+        const carUse = await endCarUseService.execute(
           id,
           end_date
         );
 
-        return response.status(200).send();
+        return response.status(200).json(carUse);
     }
 }

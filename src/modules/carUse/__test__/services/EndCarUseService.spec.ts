@@ -57,7 +57,9 @@ describe("End car use service test", () => {
       const id = carUse.id;
       const end_date = new Date();
 
-      await endCarUseService.execute(id, end_date);
+      const response = await endCarUseService.execute(id, end_date);
+
+      expect(response.end_date).toEqual(end_date);
   })
 
   it ("should show an error when the id of the car in use is not found", async () => {

@@ -26,12 +26,16 @@ export class FakeCarUseRepository implements ICarUseRepository {
       return carUse;
     }
 
-    async update({end_date, id}: CarUse): Promise<void> {
+    async update({end_date, id}: CarUse): Promise<CarUse> {
       this.ormRepository.map(carUse => {
         if (carUse.id === id) {
           carUse.end_date = end_date;
         }
       });
+
+      const car = this.ormRepository.find(carUse => carUse.id === id);
+
+      return car;
     }
 
     async delete(id: string): Promise<void> {

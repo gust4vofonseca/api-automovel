@@ -1,7 +1,8 @@
-import { ICarDTO } from "../dtos/ICarDTO";
 import { ICarRepository } from "../infra/repositories/ICarRepository";
 import AppError from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
+import { Car } from "../infra/typeorm/entities/Car";
+import { ICreateCarDTO } from "../dtos/ICreateCarDTO";
 
 @injectable()
 export class CreateCarService {
@@ -10,7 +11,7 @@ export class CreateCarService {
       private carRepository: ICarRepository,
   ) {}
 
-  async execute({brand, color, plate}: ICarDTO): Promise<void> {
+  async execute({brand, color, plate}: ICreateCarDTO): Promise<Car> {
       const carExists = await this.carRepository.findByPlate(plate);
 
       if (carExists) {
@@ -21,6 +22,8 @@ export class CreateCarService {
         );
       }
 
-      await this.carRepository.create({brand, color, plate});
+      const car = await this.carRepository.create({brand, color, plate});
+
+      return car;
   }
 }

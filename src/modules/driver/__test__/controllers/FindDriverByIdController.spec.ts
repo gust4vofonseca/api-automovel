@@ -13,22 +13,41 @@ const findDriverByIdService =
   >;
 
 describe('Find driver by id controller test', () => {
-  it('it should be possible to search for a driver by id', async () => {
-    const driver = new Driver();
-    Object.assign(driver, {
-      id: uuidV4(),
-      name: "Gustavo"
+    it('it should be possible to search for a driver by id', async () => {
+      const driver = new Driver();
+      Object.assign(driver, {
+        id: uuidV4(),
+        name: "Gustavo"
+      });
+
+      findDriverByIdService.prototype.execute.mockResolvedValueOnce(driver);
+
+      const id = driver.id;
+
+      const response = await request(app)
+      .get("/driver/find")
+      .query({id});
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(driver);
     });
 
-    findDriverByIdService.prototype.execute.mockResolvedValueOnce(driver);
+    it('should return an error due to missing parameters', async () => {
+      const driver = new Driver();
+      Object.assign(driver, {
+        id: uuidV4(),
+        name: "Gustavo"
+      });
 
-    const id = driver.id;
+      findDriverByIdService.prototype.execute.mockResolvedValueOnce(driver);
 
-    const response = await request(app)
-    .get("/driver/find")
-    .query(id);
+      const id = driver.id;
 
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual(driver);
-  });
+      const response = await request(app)
+      .get("/driver/find")
+      .query(id);
+
+
+      expect(response.status).toBe(400)
+    });
 });

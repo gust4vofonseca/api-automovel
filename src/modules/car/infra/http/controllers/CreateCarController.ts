@@ -1,4 +1,5 @@
 import { CreateCarService } from "@modules/car/services/CreateCarService";
+import AppError from "@shared/errors/AppError";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
@@ -10,14 +11,22 @@ export class CreateCarController {
           plate
         } = request.body;
 
+        if (!brand || !color || !plate) {
+          throw new AppError(
+            'It is missing parameters!',
+            400,
+            'create_car',
+          );
+        }
+
         const createCarService = container.resolve(CreateCarService);
 
-        await createCarService.execute({
+        const car = await createCarService.execute({
           color,
           plate,
           brand
         });
 
-        return response.status(201).send();
+        return response.status(201).json(car);
     }
 }

@@ -3,7 +3,7 @@ import { CarUse } from "../typeorm/entities/CarUse";
 
 export interface ICarUseRepository {
   create(data: ICarUseDTO): Promise<CarUse>;
-  update(car_use: CarUse): Promise<void>;
+  update(car_use: CarUse): Promise<CarUse>;
   delete(id: string): Promise<void>;
   findById(id: string): Promise<CarUse | undefined>;
   findByCarAndEndDateNull(id: string): Promise<CarUse | undefined>;

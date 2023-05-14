@@ -1,9 +1,9 @@
-import { ICarDTO } from "@modules/car/dtos/ICarDTO";
 import { Car } from "../typeorm/entities/Car";
+import { ICreateCarDTO } from "@modules/car/dtos/ICreateCarDTO";
 
 export interface ICarRepository {
-  create(data: ICarDTO): Promise<Car>;
-  update(car: Car): Promise<void>;
+  create(data: ICreateCarDTO): Promise<Car>;
+  update(car: Car): Promise<Car>;
   deleteById(id: string): Promise<void>;
   findById(id: string): Promise<Car | undefined>;
   findAllCars(): Promise<Car[]>;

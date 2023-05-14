@@ -53,6 +53,8 @@ describe("Create driver service test", () => {
   })
 
   it ("it should be possible to list all the uses of the cars", async () => {
-      await listCarUseService.execute();
+      const response = await listCarUseService.execute();
+
+      expect(response).toEqual([carUse]);
   })
 });

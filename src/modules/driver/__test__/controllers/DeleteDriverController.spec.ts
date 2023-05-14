@@ -11,21 +11,30 @@ const deleteDriverServiceMock =
   >;
 
 describe('Delete driver controller test', () => {
-  it('Should be able to delete a driver', async () => {
-    deleteDriverServiceMock.prototype.execute.mockResolvedValueOnce();
+    it('Should be able to delete a driver', async () => {
+      deleteDriverServiceMock.prototype.execute.mockResolvedValueOnce();
 
-    const createDriver = {
-      id: uuidV4(),
-      name: "Gustavo"
-  }
+      const createDriver = {
+        id: uuidV4(),
+        name: "Gustavo"
+      }
 
-    const response = await request(app)
-    .delete("/driver/delete")
-    .send(createDriver.id);
+      const id = createDriver.id;
 
-    expect(response.status).toBe(200);
-    expect(
-      deleteDriverServiceMock.prototype.execute,
-    ).toHaveBeenCalledWith(undefined);
-  });
+      const response = await request(app)
+      .delete("/driver/delete")
+      .send({id});
+
+      expect(response.status).toBe(200);
+    });
+
+    it('should return an error due to missing parameters', async () => {      
+      deleteDriverServiceMock.prototype.execute.mockResolvedValueOnce();
+
+      const response = await request(app)
+      .delete("/driver/delete")
+      .send();
+
+      expect(response.status).toBe(400)
+    });
 });

@@ -27,4 +27,14 @@ describe("Find driver by service test", () => {
 
     expect(data).toEqual(driver);
   })
+
+  it ("should return an error because there is no driver", async () => {
+    await expect(
+      findDriverByIdService.execute('1234')
+    ).rejects.toEqual(new AppError(
+      'Driver does not exist!',
+      400,
+      'find_driver',
+    ));
+  })
 });

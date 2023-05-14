@@ -28,9 +28,21 @@ describe('Find car by id controller test', () => {
 
     const response = await request(app)
     .get("/car/find")
-    .query(id);
+    .query({id});
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual(car);
+  });
+
+  it('should return an error due to missing parameters', async () => {
+    const car = new Car();
+
+    findCarByIdService.prototype.execute.mockResolvedValueOnce(car);
+
+    const response = await request(app)
+    .get("/car/find")
+    .query({});
+
+    expect(response.status).toBe(400);
   });
 });

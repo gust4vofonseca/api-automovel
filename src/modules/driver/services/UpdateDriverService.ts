@@ -2,6 +2,7 @@
 import { inject, injectable } from "tsyringe";
 import { IDriverRepository } from "../infra/repositories/IDriverRepository";
 import AppError from "@shared/errors/AppError";
+import { Driver } from "../infra/typeorm/entities/Driver";
 
 @injectable()
 export class UpdateDriverService {
@@ -10,7 +11,7 @@ export class UpdateDriverService {
       private driverRepository: IDriverRepository,
   ) {}
 
-  async execute(id: string, name: string): Promise<void> {
+  async execute(id: string, name: string): Promise<Driver> {
     const driver = await this.driverRepository.findById(id);
 
     if (!driver) {
@@ -21,10 +22,10 @@ export class UpdateDriverService {
       );
     }
 
-    if (driver.name !== name) {
-      driver.name = name;
-    }
+    driver.name = name;    
 
-    await this.driverRepository.update(driver);
+    const saveDriver = await this.driverRepository.update(driver);
+
+    return saveDriver;
   }
 }

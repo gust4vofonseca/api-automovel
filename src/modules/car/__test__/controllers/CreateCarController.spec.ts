@@ -1,4 +1,6 @@
+import { Car } from '@modules/car/infra/typeorm/entities/Car';
 import { CreateCarService } from '@modules/car/services/CreateCarService';
+import AppError from '@shared/errors/AppError';
 import { app } from '@shared/infra/http/app';
 import request from 'supertest';
 
@@ -10,13 +12,15 @@ const createCarServiceMock =
 
 describe('Create car controller test', () => {
   it('Should be able to create a car', async () => {
-    createCarServiceMock.prototype.execute.mockResolvedValueOnce();
+    const car = new Car()
+
+    createCarServiceMock.prototype.execute.mockResolvedValueOnce(car);
 
     const createCar = {
       brand: "Fiat",
       color: "Cinza",
       plate: "HMT-3421"
-  }
+    }
 
     const response = await request(app)
     .post("/car/create")
@@ -27,4 +31,20 @@ describe('Create car controller test', () => {
       createCarServiceMock.prototype.execute,
     ).toHaveBeenCalledWith(createCar);
   });
+
+    it('should return an error due to missing parameters', async () => {
+        const car = new Car()
+        
+        createCarServiceMock.prototype.execute.mockResolvedValueOnce(car);
+
+        const createCar = {
+          brand: "Fiat",
+          color: "Cinza",
+        }
+        const response = await request(app)
+        .post("/car/create")
+        .send(createCar);
+
+        expect(response.status).toBe(400)
+    });
 });

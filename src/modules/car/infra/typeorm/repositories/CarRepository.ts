@@ -2,7 +2,7 @@ import { Repository } from "typeorm";
 import { dataSource } from "@shared/infra/typeorm";
 import { Car } from "../entities/Car";
 import { ICarRepository } from "../../repositories/ICarRepository";
-import { ICarDTO } from "@modules/car/dtos/ICarDTO";
+import { ICreateCarDTO } from "@modules/car/dtos/ICreateCarDTO";
 
 
 export class CarRepository implements ICarRepository {
@@ -12,24 +12,22 @@ export class CarRepository implements ICarRepository {
       this.ormRepository = dataSource.getRepository(Car);
     }
 
-    async create({ brand, color, plate }: ICarDTO): Promise<Car> {
+    async create({ brand, color, plate }: ICreateCarDTO): Promise<Car> {
         const car = this.ormRepository.create({
           brand,
           color,
           plate
         });
 
-        await this.ormRepository.save(car);
-
-        return car;
+        return await this.ormRepository.save(car);
     }
 
     async deleteById(id: string): Promise<void> {
         await this.ormRepository.delete({id});
     }
 
-    async update(car: Car): Promise<void> {
-        await this.ormRepository.save(car);
+    async update(car: Car): Promise<Car> {
+        return await this.ormRepository.save(car);
     }
 
     async findById(id: string): Promise<Car> {

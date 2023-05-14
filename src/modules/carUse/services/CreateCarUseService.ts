@@ -4,6 +4,7 @@ import { ICarUseRepository } from "../infra/repositories/ICarUseRepository";
 import { ICarUseDTO } from "../dtos/ICarUseDTO";
 import { ICarRepository } from "@modules/car/infra/repositories/ICarRepository";
 import { IDriverRepository } from "@modules/driver/infra/repositories/IDriverRepository";
+import { CarUse } from "../infra/typeorm/entities/CarUse";
 
 @injectable()
 export class CreateCarUseService {
@@ -18,7 +19,8 @@ export class CreateCarUseService {
       private driverRepository: IDriverRepository,
   ) {}
 
-  async execute({car_id, driver_id, reason_for_use, start_date}: ICarUseDTO): Promise<void> {
+  async execute({car_id, driver_id, reason_for_use, start_date}: ICarUseDTO): Promise<CarUse> {
+
       const carInUse = await this.carUseRepository.findByCarAndEndDateNull(car_id);
 
       if (carInUse) {
@@ -59,6 +61,8 @@ export class CreateCarUseService {
         );
       }
 
-      await this.carUseRepository.create({car_id, driver_id, reason_for_use, start_date});
+      const carUse = await this.carUseRepository.create({car_id, driver_id, reason_for_use, start_date});
+
+      return carUse;
   }
 }

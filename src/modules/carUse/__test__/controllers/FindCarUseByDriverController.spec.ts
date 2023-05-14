@@ -31,8 +31,20 @@ describe('Find driver by id controller test', () => {
 
     const response = await request(app)
     .get("/car-use/find")
-    .query(id);
+    .query({id});
 
     expect(response.status).toBe(200);
   });
+
+  it ("should return an error due to missing parameters", async () => {
+    const carUse = new CarUse();
+
+    findCarUseByDriverService.prototype.execute.mockResolvedValueOnce([carUse]);
+
+    const response = await request(app)
+    .get("/car-use/find")
+    .query({});
+
+    expect(response.status).toBe(400);
+  })
 });

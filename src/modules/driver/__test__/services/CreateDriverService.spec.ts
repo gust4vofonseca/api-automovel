@@ -13,6 +13,8 @@ describe("Create driver service test", () => {
 
   it ("It should be possible to create a driver", async () => {
     const name = "Gustavo";
-    await createDriverService.execute(name);
+    const response = await createDriverService.execute(name);
+
+    expect(response.name).toEqual(name);
   })
 });

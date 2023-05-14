@@ -25,10 +25,12 @@ describe("Update driver service test", () => {
     const id = driver.id;
     const name = "Gustavo Fonseca";
 
-    await updateDriverService.execute(
+    const response = await updateDriverService.execute(
       id,
       name
     );
+
+    expect(response.name).toEqual(name);
   })
 
   it ("It should show an error when trying to change non-existent id information", async () => {

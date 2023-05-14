@@ -1,4 +1,5 @@
 import { ICarDTO } from '@modules/car/dtos/ICarDTO';
+import { ICreateCarDTO } from '@modules/car/dtos/ICreateCarDTO';
 import { ICarRepository } from '@modules/car/infra/repositories/ICarRepository';
 import { Car } from '@modules/car/infra/typeorm/entities/Car';
 import { CarRepository } from '@modules/car/infra/typeorm/repositories/CarRepository';
@@ -23,7 +24,7 @@ describe('Car repository test', () => {
   });
 
   it('Should be able to create a car', async () => {
-    const carData: ICarDTO = {
+    const carData: ICreateCarDTO = {
       brand: "test",
       color: "test",
       plate: "test",

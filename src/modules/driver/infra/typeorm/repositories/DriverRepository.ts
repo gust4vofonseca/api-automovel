@@ -13,13 +13,11 @@ export class DriverRepository implements IDriverRepository {
   async create(name: string): Promise<Driver> {
     const driver = this.ormRepository.create({name});
 
-    await this.ormRepository.save(driver);
-
-    return driver;
+    return await this.ormRepository.save(driver);
   }
 
-  async update(driver: Driver): Promise<void> {
-    await this.ormRepository.save(driver);
+  async update(driver: Driver): Promise<Driver> {
+    return await this.ormRepository.save(driver);
   }
 
   async delete(id: string): Promise<void> {

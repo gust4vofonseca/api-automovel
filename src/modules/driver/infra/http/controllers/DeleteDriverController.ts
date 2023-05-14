@@ -1,4 +1,5 @@
 import { DeleteDriverService } from "@modules/driver/services/DeleteDriverService";
+import AppError from "@shared/errors/AppError";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
@@ -8,6 +9,14 @@ export class DeleteDriverController {
           id
         } = request.body;
 
+        if (!id) {
+          throw new AppError(
+            'It is missing parameters!',
+            400,
+            'delete_driver',
+          );
+        }
+    
         const deleteDriverService = container.resolve(DeleteDriverService);
 
         await deleteDriverService.execute(id);

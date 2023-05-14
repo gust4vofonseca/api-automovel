@@ -25,7 +25,24 @@ describe('List drivers controller test', () => {
 
     const response = await request(app)
     .get("/driver/list")
-    .send();
+    .query({});
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual([driver]);
+  });
+
+  it('it should be possible to search for a driver', async () => {
+    const driver = new Driver();
+    Object.assign(driver, {
+      id: uuidV4(),
+      name: "Gustavo"
+    });
+
+    listDriversService.prototype.execute.mockResolvedValueOnce([driver]);
+
+    const response = await request(app)
+    .get("/driver/list")
+    .query({ name: "Gustavo"});
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual([driver]);

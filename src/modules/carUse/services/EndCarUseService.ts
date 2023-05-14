@@ -1,6 +1,7 @@
 import AppError from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 import { ICarUseRepository } from "../infra/repositories/ICarUseRepository";
+import { CarUse } from "../infra/typeorm/entities/CarUse";
 
 @injectable()
 export class EndCarUseService {
@@ -9,7 +10,9 @@ export class EndCarUseService {
       private carUseRepository: ICarUseRepository,
   ) {}
 
-  async execute(id: string, end_date: Date): Promise<void> {
+  async execute(id: string, end_date: Date): Promise<CarUse> {
+
+
       const carUse = await this.carUseRepository.findById(id);
 
       if (!carUse || carUse.end_date !== null) {
@@ -22,6 +25,8 @@ export class EndCarUseService {
 
       carUse.end_date = new Date(end_date);
 
-      await this.carUseRepository.update(carUse);
+      const saveCarUse = await this.carUseRepository.update(carUse);
+
+      return saveCarUse;
   }
 }

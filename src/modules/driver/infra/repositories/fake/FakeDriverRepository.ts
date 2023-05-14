@@ -28,12 +28,14 @@ export class FakeDriverRepository implements IDriverRepository {
         this.ormRepository = drivers;
     }
 
-    async update({id, name}: Driver): Promise<void> {
+    async update({id, name}: Driver): Promise<Driver> {
         this.ormRepository.map(driver => {
           if (driver.id === id) {
               driver.name = name
           }
         });
+
+        return this.ormRepository.find(driver => driver.id === id);
     }
 
     async findById(id: string): Promise<Driver | undefined> {

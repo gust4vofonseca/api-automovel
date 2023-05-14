@@ -3,6 +3,7 @@ import { ICarDTO } from "../dtos/ICarDTO";
 import { inject, injectable } from "tsyringe";
 import { ICarRepository } from "../infra/repositories/ICarRepository";
 import AppError from "@shared/errors/AppError";
+import { Car } from "../infra/typeorm/entities/Car";
 
 @injectable()
 export class UpdateCarService {
@@ -12,7 +13,7 @@ export class UpdateCarService {
       private carRepository: ICarRepository,
   ) {}
 
-  async execute({brand, color, plate, id}: ICarDTO): Promise<void> {
+  async execute({brand, color, plate, id}: ICarDTO): Promise<Car> {
       const car = await this.carRepository.findById(id);
 
       if (!car) {
@@ -35,6 +36,8 @@ export class UpdateCarService {
         car.plate = plate;
       }
 
-      await this.carRepository.update(car);
+      const saveCar = await this.carRepository.update(car);
+
+      return saveCar;
   }
 }
