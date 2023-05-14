@@ -8,7 +8,7 @@ export const dataSource = new DataSource({
   port: 5432,
   username: 'postgres',
   password: process.env.POSTGRESQL_PASSWORD,
-  database: process.env.NODE_ENV === 'test' ? 'postgres_test' :'postgres',
+  database: process.env.NODE_ENV === 'dev' ? 'postgres' :'postgres_test',
   synchronize: false,
   logging: false,
   migrationsTableName: 'migration',
