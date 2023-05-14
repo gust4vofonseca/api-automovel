@@ -8,9 +8,11 @@ export class ListDriversController {
           name,
         } = request.query;
 
+        const nameData = name ? String(name) : undefined;
+
         const listDriversService = container.resolve(ListDriversService);
 
-        const drivers = await listDriversService.execute(String(name));
+        const drivers = await listDriversService.execute(nameData);
 
         return response.status(200).json(drivers);
     }
