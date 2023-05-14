@@ -10,9 +10,12 @@ export class ListCarsByParametersController {
           color
         } = request.query;
 
+        const brandData = brand ? String(brand) : undefined;
+        const colorData = color ? String(color) : undefined;
+        
         const listCarsByParametersService = container.resolve(ListCarsByParametersService);
 
-        const cars = await listCarsByParametersService.execute( String(brand), String(color));
+        const cars = await listCarsByParametersService.execute( brandData, colorData);
 
         return response.json(cars);
     }

@@ -12,8 +12,6 @@ export class ListCarsByParametersService {
   ) {}
 
   async execute(brand ?: string, color ?: string): Promise<Car[]> {
-      brand = brand ? brand : undefined;
-      color = color ? color : undefined;
       const car = await this.carRepository.findParms(color, brand);
 
       return car;
