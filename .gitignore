@@ -1,0 +1,12 @@
+node_modules
+coverage
+dist
+
+.DS_Store
+.env
+
+yarn.lock
+yarn-error.log
+
+logs/*
+!logs/.gitkeep
