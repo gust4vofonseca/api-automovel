@@ -130,6 +130,10 @@ describe('Car repository test', () => {
 
     const carsUse = await ormRepositoryCarUse.find();
 
+    const response = await carUseRepository.findById(carUse.id);
+
+    expect(response).toBeUndefined();
+
     expect(carsUse).toHaveLength(0);
   });
 

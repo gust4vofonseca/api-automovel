@@ -49,6 +49,10 @@ describe("Delete car service test", () => {
 
   it ("Must be able to delete a car via id", async () => {
     await deleteCarService.execute(car.id);
+
+    const carResponse = await fakeCarRepository.findById(car.id);
+
+    expect(carResponse).toBeUndefined();
   })
 
   it ("An error should show when trying to delete a car with a non-existent id", async () => {

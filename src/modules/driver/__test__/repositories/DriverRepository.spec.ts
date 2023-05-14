@@ -66,5 +66,9 @@ describe('Car repository test', () => {
 
   it('it should be possible to delete', async () => {    
     await driverRepository.delete(driver.id);
+
+    const response = await driverRepository.findById(driver.id);
+
+    expect(response).toBeUndefined();
   });
 });

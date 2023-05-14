@@ -51,6 +51,10 @@ describe("Delete driver service test", () => {
 
   it ("Must be able to delete a driver via id", async () => {
     await deleteDriverService.execute(driver.id);
+
+    const response = await fakeDriverRepository.findById(driver.id);
+
+    expect(response).toBeUndefined();
   })
 
   it ("An error should show when trying to delete a driver with a non-existent id", async () => {

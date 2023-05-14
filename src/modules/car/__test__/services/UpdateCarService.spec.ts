@@ -24,12 +24,14 @@ describe("Update car service test", () => {
   })
 
   it ("It should be possible to change car information", async () => {
-    await updateCarService.execute({
+    const response = await updateCarService.execute({
       id: car.id,
       color: "Branco",
       plate: "HMT1478",
       brand: "Volks",
     });
+
+    expect(response).toBeInstanceOf(Car);
   })
 
   it ("It should show an error when trying to change non-existent id information", async () => {

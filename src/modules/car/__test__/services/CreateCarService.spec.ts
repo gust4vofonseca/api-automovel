@@ -1,5 +1,6 @@
 import { ICarRepository } from "@modules/car/infra/repositories/ICarRepository";
 import { FakeCarRepository } from "@modules/car/infra/repositories/fakes/FakeCarRepository";
+import { Car } from "@modules/car/infra/typeorm/entities/Car";
 import { CreateCarService } from "@modules/car/services/CreateCarService";
 import AppError from "@shared/errors/AppError";
 
@@ -13,11 +14,13 @@ describe("Create car service test", () => {
   })
 
   it ("It should be possible to create a car", async () => {
-    await createCarService.execute({
+    const car = await createCarService.execute({
       brand: "Fiat",
       plate: "HMT1234",
       color: "Cinza",
     });
+
+    expect(car).toBeInstanceOf(Car);
   })
 
   it ("if there is an existing license plate the creation of the car does not occur", async () => {
