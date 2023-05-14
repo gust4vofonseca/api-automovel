@@ -35,7 +35,8 @@ describe("Create car use service test", () => {
     driver = new Driver();
     Object.assign(driver, {
       id: uuidV4(),
-      name: "Gustavo"
+      name: "Gustavo",
+      document: "135648"
     })
 
     car2 = new Car();
@@ -49,7 +50,8 @@ describe("Create car use service test", () => {
     driver2 = new Driver();
     Object.assign(driver2, {
       id: uuidV4(),
-      name: "Gustavo"
+      name: "Gustavo",
+      document: "123456"
     })
 
     carUse = new CarUse();

@@ -21,7 +21,8 @@ describe('Update driver controller test', () => {
     .patch("/driver/update")
     .send({
       id: uuidV4(),
-      name: "Gustavo Fonseca"
+      name: "Gustavo Fonseca",
+      document: "135648"
     });
 
     expect(response.status).toBe(200);
@@ -34,7 +35,7 @@ describe('Update driver controller test', () => {
       const response = await request(app)
       .patch("/driver/update")
       .send({
-        name: "Gustavo Fonseca"
+        name: "Gustavo Fonseca",
       });
 
       expect(response.status).toBe(400)

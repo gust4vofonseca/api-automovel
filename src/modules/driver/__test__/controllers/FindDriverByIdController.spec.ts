@@ -17,7 +17,8 @@ describe('Find driver by id controller test', () => {
       const driver = new Driver();
       Object.assign(driver, {
         id: uuidV4(),
-        name: "Gustavo"
+        name: "Gustavo",
+        document: "135648"
       });
 
       findDriverByIdService.prototype.execute.mockResolvedValueOnce(driver);
@@ -34,10 +35,6 @@ describe('Find driver by id controller test', () => {
 
     it('should return an error due to missing parameters', async () => {
       const driver = new Driver();
-      Object.assign(driver, {
-        id: uuidV4(),
-        name: "Gustavo"
-      });
 
       findDriverByIdService.prototype.execute.mockResolvedValueOnce(driver);
 
@@ -45,7 +42,7 @@ describe('Find driver by id controller test', () => {
 
       const response = await request(app)
       .get("/driver/find")
-      .query(id);
+      .query({});
 
 
       expect(response.status).toBe(400)

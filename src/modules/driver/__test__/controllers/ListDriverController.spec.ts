@@ -18,7 +18,8 @@ describe('List drivers controller test', () => {
     const driver = new Driver();
     Object.assign(driver, {
       id: uuidV4(),
-      name: "Gustavo"
+      name: "Gustavo",
+      document: "135648"
     });
 
     listDriversService.prototype.execute.mockResolvedValueOnce([driver]);
@@ -35,7 +36,8 @@ describe('List drivers controller test', () => {
     const driver = new Driver();
     Object.assign(driver, {
       id: uuidV4(),
-      name: "Gustavo"
+      name: "Gustavo",
+      document: "135648",
     });
 
     listDriversService.prototype.execute.mockResolvedValueOnce([driver]);

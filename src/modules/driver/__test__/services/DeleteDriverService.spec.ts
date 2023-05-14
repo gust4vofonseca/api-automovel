@@ -30,7 +30,8 @@ describe("Delete driver service test", () => {
     driver = new Driver();
     Object.assign(driver, {
       id: uuidV4(),
-      name: "Gustavo"
+      name: "Gustavo",
+      document: "135648"
     })
 
     carUse = new CarUse();

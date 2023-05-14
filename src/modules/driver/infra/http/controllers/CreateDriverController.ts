@@ -6,10 +6,11 @@ import { container } from "tsyringe";
 export class CreateDriverController {
     async handle(request: Request, response: Response): Promise<Response> {
         const {
-          name
+          name,
+          document
         } = request.body;
 
-        if (!name) {
+        if (!name || !document) {
           throw new AppError(
             'It is missing parameters!',
             400,
@@ -19,7 +20,7 @@ export class CreateDriverController {
 
         const createDriverService = container.resolve(CreateDriverService);
 
-        const driver = await createDriverService.execute(name);
+        const driver = await createDriverService.execute({name, document});
 
         return response.status(201).json(driver);
     }

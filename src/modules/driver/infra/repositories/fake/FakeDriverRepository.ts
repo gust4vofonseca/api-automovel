@@ -1,6 +1,7 @@
 import { v4 as uuidV4 } from 'uuid';
 import { IDriverRepository } from "../IDriverRepository";
 import { Driver } from "../../typeorm/entities/Driver";
+import { ICreateDriverDTO } from '@modules/driver/dtos/ICreateDriverDTO';
 
 export class FakeDriverRepository implements IDriverRepository {
     private ormRepository: Driver[] = [];
@@ -9,12 +10,13 @@ export class FakeDriverRepository implements IDriverRepository {
       this.ormRepository = drivers || [];
     }
 
-    async create(name: string): Promise<Driver> {
+    async create({name, document}: ICreateDriverDTO): Promise<Driver> {
         const driver = new Driver();
 
         Object.assign(driver, {
           id: uuidV4(),
-          name
+          name,
+          document,
         });
 
         this.ormRepository.push(driver);
@@ -28,10 +30,11 @@ export class FakeDriverRepository implements IDriverRepository {
         this.ormRepository = drivers;
     }
 
-    async update({id, name}: Driver): Promise<Driver> {
+    async update({id, name, document}: Driver): Promise<Driver> {
         this.ormRepository.map(driver => {
           if (driver.id === id) {
               driver.name = name
+              driver.document = document
           }
         });
 
@@ -47,6 +50,8 @@ export class FakeDriverRepository implements IDriverRepository {
 
     }
 
-
+    async findByDocument(document: string): Promise<Driver> {
+      return this.ormRepository.find(driver => driver.document === document);
+    }
 }
 

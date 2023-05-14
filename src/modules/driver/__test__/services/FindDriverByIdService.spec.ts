@@ -16,6 +16,7 @@ describe("Find driver by service test", () => {
     Object.assign(driver, {
       id: uuidV4(),
       name: "Gustavo",
+      document: "135648"
     });
 
     fakeDriverRepository = new FakeDriverRepository([driver]);

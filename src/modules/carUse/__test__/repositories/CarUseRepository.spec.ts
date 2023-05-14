@@ -40,7 +40,7 @@ describe('Car repository test', () => {
           plate: 'test'
     });
 
-    driver = await driverRepository.create("Teste");
+    driver = await driverRepository.create({name: "Gustavo", document: "123456"});
   });
 
   afterAll(async () => {

@@ -17,6 +17,7 @@ describe('Create driver controller test', () => {
 
       const createDriver = {
         name: "Gustavo",
+        document: "135648"
     }
 
       const response = await request(app)
@@ -30,11 +31,6 @@ describe('Create driver controller test', () => {
       const driver = new Driver()
       
       createDriverServiceMock.prototype.execute.mockResolvedValueOnce(driver);
-
-
-      const createDriver = {
-        name: "Gustavo",
-    }
 
       const response = await request(app)
       .post("/driver/create")

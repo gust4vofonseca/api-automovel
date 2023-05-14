@@ -25,8 +25,10 @@ describe('Car repository test', () => {
     await ormRepository.delete({});
   });
 
-  it('it should be possible to create the driver', async () => {    
-    driver = await driverRepository.create("Gustavo");
+  it('it should be possible to create the driver', async () => {  
+    const name = "Gustavo";
+    const document = "123456"  
+    driver = await driverRepository.create({name, document});
 
     const drivers = await ormRepository.find();
 
@@ -54,6 +56,12 @@ describe('Car repository test', () => {
     const driverResponse = await driverRepository.findByParms(driver.name);
 
     expect(driverResponse).toContainEqual(driver);
+  });
+
+  it('it should be possible to search by name', async () => {    
+    const driverResponse = await driverRepository.findByDocument(driver.document);
+
+    expect(driverResponse).toEqual(driver);
   });
 
   it('it should be possible to delete', async () => {    

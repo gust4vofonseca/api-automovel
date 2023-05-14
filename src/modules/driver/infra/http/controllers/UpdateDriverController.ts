@@ -8,9 +8,10 @@ export class UpdateDriverController {
         const {
           id,
           name,
+          document
         } = request.body;
 
-        if (!name || !id) {
+        if (!name || !id || !document) {
           throw new AppError(
             'It is missing parameters!',
             400,
@@ -20,7 +21,7 @@ export class UpdateDriverController {
 
         const updateDriverService = container.resolve(UpdateDriverService);
 
-        const driver = await updateDriverService.execute(id, name);
+        const driver = await updateDriverService.execute({id, name, document});
 
         return response.status(200).json(driver);
     }

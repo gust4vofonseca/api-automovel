@@ -16,7 +16,8 @@ describe('Delete driver controller test', () => {
 
       const createDriver = {
         id: uuidV4(),
-        name: "Gustavo"
+        name: "Gustavo",
+        document: "135648"
       }
 
       const id = createDriver.id;

@@ -2,6 +2,7 @@ import { Repository } from "typeorm";
 import { IDriverRepository } from "../../repositories/IDriverRepository";
 import { Driver } from "../entities/Driver";
 import { dataSource } from "@shared/infra/typeorm";
+import { ICreateDriverDTO } from "@modules/driver/dtos/ICreateDriverDTO";
 
 export class DriverRepository implements IDriverRepository {
   private ormRepository: Repository<Driver>;
@@ -10,8 +11,9 @@ export class DriverRepository implements IDriverRepository {
     this.ormRepository = dataSource.getRepository(Driver);
   }
 
-  async create(name: string): Promise<Driver> {
-    const driver = this.ormRepository.create({name});
+
+  async create({name, document}: ICreateDriverDTO): Promise<Driver> {
+    const driver = this.ormRepository.create({name, document});
 
     return await this.ormRepository.save(driver);
   }
@@ -32,6 +34,10 @@ export class DriverRepository implements IDriverRepository {
     return await this.ormRepository.find({
       where: {name}
     })
+  }
+
+  async findByDocument(document: string): Promise<Driver> {
+    return await this.ormRepository.findOneBy({document});
   }
 
 }

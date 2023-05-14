@@ -9,6 +9,9 @@ export class Driver {
     @Column()
     name: string;
 
+    @Column()
+    document: string;
+
     @CreateDateColumn()
     created_at: Date;
 
