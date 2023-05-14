@@ -13,16 +13,38 @@ const updateCarService =
   >;
 
 describe('Update car controller test', () => {
-  it('it should be possible to change information', async () => {
-    updateCarService.prototype.execute.mockResolvedValueOnce();
+    it('it should be possible to change information', async () => {
+      const car = new Car()
+      
+      updateCarService.prototype.execute.mockResolvedValueOnce(car);
 
-    const response = await request(app)
-    .patch("/car/update")
-    .send({
-      id: uuidV4(),
-      plate: "Volks"
+      const updateCar = {
+        brand: "Fiat",
+        color: "Cinza",
+        plate: "HMT-3421",
+        id: uuidV4()
+      }
+
+      const response = await request(app)
+      .patch("/car/update")
+      .send(updateCar);
+
+      expect(response.status).toBe(200);
     });
 
-    expect(response.status).toBe(200);
-  });
+    it('should return an error due to missing parameters', async () => {
+      const car = new Car()
+      
+      updateCarService.prototype.execute.mockResolvedValueOnce(car);
+
+      const updateCar = {
+        brand: "Fiat",
+        color: "Cinza",
+      }
+      const response = await request(app)
+      .patch("/car/update")
+      .send(updateCar);
+
+      expect(response.status).toBe(400)
+    });
 });
