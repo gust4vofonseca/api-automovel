@@ -12,5 +12,8 @@ crie uma pasta .env como a .env.exemplo logo em seguida:
 yarn dev
 
 # Como testar o projeto
-coloque na variavel do .env NODE_ENV=test logo em seguida:
+Coloque na variavel do .env NODE_ENV=test logo em seguida:
+crie um banco de dados chamado: postgres_test
+Rode as migrations novamente: yarn typeorm migration:run
+Para iniciar os testes rode:
 yarn test
