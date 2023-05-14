@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 module.exports = [
   {
     name: 'default',
@@ -6,7 +8,7 @@ module.exports = [
     port: 5432,
     username: 'postgres',
     password: process.env.POSTGRESQL_PASSWORD,
-    database: 'postgres',
+    database: process.env.NODE_ENV === 'test' ? 'postgres_test' :'postgres',
     synchronize: false,
     logging: false,
     migrationsTableName: 'migration',

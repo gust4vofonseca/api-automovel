@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --require dotenv/config --respawn src/server.ts",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js -d src/shared/infra/typeorm/index.ts",
-    "test": "set NODE_ENV=test && jest --runInBand --detectOpenHandles"
+    "test": "jest --runInBand --detectOpenHandles"
   },
   "devDependencies": {
     "@types/express": "^4.17.17",
